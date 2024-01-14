@@ -1,9 +1,7 @@
 ﻿using ProGaudi.MsgPack.Light;
-
 using ProGaudi.Tarantool.Client.Converters;
 using ProGaudi.Tarantool.Client.Model;
 using ProGaudi.Tarantool.Client.Model.Enums;
-using ProGaudi.Tarantool.Client.Model.Responses;
 
 namespace ProGaudi.Tarantool.Client
 {

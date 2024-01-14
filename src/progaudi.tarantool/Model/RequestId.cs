@@ -1,6 +1,6 @@
 ﻿namespace ProGaudi.Tarantool.Client.Model
 {
-    public struct RequestId
+    public readonly struct RequestId
     {
         public RequestId(ulong value)
         {

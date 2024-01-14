@@ -11,7 +11,7 @@ namespace ProGaudi.Tarantool.Client.Tests
     public class NetworkPerformance : IAsyncLifetime
     {
         Client.Box _tarantoolClient;
-        private readonly StringWriterLog _stringWriterLog = new StringWriterLog();
+        private readonly StringWriterLog _stringWriterLog = new();
         private ConnectionMultiplexer _multiplexer;
 
         [Fact]

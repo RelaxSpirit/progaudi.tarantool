@@ -15,8 +15,8 @@ namespace ProGaudi.Tarantool.Client
 {
     public class Space : ISpace
     {
-        private Dictionary<string, IIndex> _indexByName = new Dictionary<string, IIndex>();
-        private Dictionary<uint, IIndex> _indexById = new Dictionary<uint, IIndex>();
+        private Dictionary<string, IIndex> _indexByName = new();
+        private Dictionary<uint, IIndex> _indexById = new();
 
         public ILogicalConnection LogicalConnection { get; set; }
 

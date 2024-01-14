@@ -32,14 +32,14 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public bool Equals(TarantoolVersion other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Major.Equals(other.Major) && Minor == other.Minor && Build == other.Build && string.Equals(CommitHash, other.CommitHash);
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolVersion) obj);
@@ -47,20 +47,13 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Major.GetHashCode();
-                hashCode = (hashCode * 397) ^ Minor;
-                hashCode = (hashCode * 397) ^ Build;
-                hashCode = (hashCode * 397) ^ CommitHash.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(Major, Minor, Build, CommitHash);
         }
 
         public int CompareTo(TarantoolVersion other)
         {
             if (ReferenceEquals(this, other)) return 0;
-            if (ReferenceEquals(null, other)) return 1;
+            if (other is null) return 1;
             var majorComparison = Major.CompareTo(other.Major);
             if (majorComparison != 0) return majorComparison;
             var minorComparison = Minor.CompareTo(other.Minor);
@@ -77,7 +70,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public int CompareTo(object obj)
         {
-            if (ReferenceEquals(null, obj)) return 1;
+            if (obj is null) return 1;
             if (ReferenceEquals(this, obj)) return 0;
             return obj is TarantoolVersion version
                 ? CompareTo(version)

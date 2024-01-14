@@ -16,6 +16,7 @@ namespace ProGaudi.Tarantool.Client
         private BoxInfo _info;
 
         private bool _sqlReady;
+        private bool disposedValue;
 
         public Box(ClientOptions options)
         {
@@ -80,13 +81,6 @@ namespace ProGaudi.Tarantool.Client
         public static Task<Box> Connect(string host, int port, string user, string password)
         {
             return Connect($"{user}:{password}@{host}:{port}");
-        }
-
-        public void Dispose()
-        {
-            _clientOptions.LogWriter?.WriteLine("Box is disposing...");
-            _clientOptions.LogWriter?.Flush();
-            _logicalConnection.Dispose();
         }
 
         public ISchema GetSchema() => Schema;
@@ -162,6 +156,27 @@ namespace ProGaudi.Tarantool.Client
             if (!_sqlReady) throw ExceptionHelper.SqlIsNotAvailable(Info.Version);
 
             return _logicalConnection.SendRequest<ExecuteSqlRequest, TResponse>(new ExecuteSqlRequest(query, parameters));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _clientOptions.LogWriter?.WriteLine("Box is disposing...");
+                    _clientOptions.LogWriter?.Flush();
+                    _logicalConnection.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            System.GC.SuppressFinalize(this);
         }
     }
 }

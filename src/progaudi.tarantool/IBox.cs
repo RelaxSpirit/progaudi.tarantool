@@ -17,7 +17,7 @@ namespace ProGaudi.Tarantool.Client
 
         BoxInfo Info { get; }
 
-        [Obsolete]
+        [Obsolete("Use IBox.Schema")]
         ISchema GetSchema();
 
         Task ReloadSchema();

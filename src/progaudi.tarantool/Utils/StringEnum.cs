@@ -18,7 +18,6 @@ namespace ProGaudi.Tarantool.Client.Utils
         public static T Parse<T>(Type type, string stringValue, bool ignoreCase)
             where T : struct
         {
-            T output;
             string enumStringValue = null;
 
             if (!type.GetTypeInfo().IsEnum)
@@ -26,7 +25,7 @@ namespace ProGaudi.Tarantool.Client.Utils
                 throw ExceptionHelper.EnumExpected(type);
             }
 
-            if (!Enum.TryParse(stringValue, ignoreCase, out output))
+            if (!Enum.TryParse(stringValue, ignoreCase, out T output))
             {
 
                 //Look for our string value associated with fields in this enum

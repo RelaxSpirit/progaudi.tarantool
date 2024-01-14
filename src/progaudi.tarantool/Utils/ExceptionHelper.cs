@@ -1,6 +1,5 @@
 ﻿using System;
 using ProGaudi.MsgPack.Light;
-
 using ProGaudi.Tarantool.Client.Model;
 using ProGaudi.Tarantool.Client.Model.Enums;
 using ProGaudi.Tarantool.Client.Model.Headers;
@@ -95,7 +94,7 @@ namespace ProGaudi.Tarantool.Client.Utils
 
         public static NotSupportedException WrongIndexType(string indexType, string operation)
         {
-            return new NotSupportedException($"Only {indexType} indicies support {operation} operation.");
+            return new NotSupportedException($"Only {indexType} indices support {operation} operation.");
         }
 
         public static Exception RequestWithSuchIdAlreadySent(RequestId requestId)
@@ -105,13 +104,11 @@ namespace ProGaudi.Tarantool.Client.Utils
 
         private static string GetDetailedTarantoolMessage(CommandCode code)
         {
-            switch ((uint)code)
+            return (uint)code switch
             {
-                case 0x8012:
-                    return "If index part type is NUM, unsigned int should be used.";
-            }
-
-            return null;
+                0x8012 => "If index part type is NUM, unsigned int should be used.",
+                _ => null,
+            };
         }
 
         public static Exception VersionCantBeEmpty()

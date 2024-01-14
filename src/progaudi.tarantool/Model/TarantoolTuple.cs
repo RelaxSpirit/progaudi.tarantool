@@ -23,7 +23,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1>) obj);
@@ -64,7 +64,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2>) obj);
@@ -72,12 +72,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2);
         }
 
         public override string ToString()
@@ -109,7 +104,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3>) obj);
@@ -117,13 +112,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3);
         }
 
         public override string ToString()
@@ -158,7 +147,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3, T4>) obj);
@@ -166,14 +155,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                hashCode = (hashCode*397) ^ EqualityComparer<T4>.Default.GetHashCode(Item4);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3, Item4);
         }
 
         public override string ToString()
@@ -211,7 +193,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3, T4, T5>) obj);
@@ -219,15 +201,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                hashCode = (hashCode*397) ^ EqualityComparer<T4>.Default.GetHashCode(Item4);
-                hashCode = (hashCode*397) ^ EqualityComparer<T5>.Default.GetHashCode(Item5);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3, Item4, Item5);
         }
 
         public override string ToString()
@@ -268,7 +242,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3, T4, T5, T6>) obj);
@@ -276,16 +250,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                hashCode = (hashCode*397) ^ EqualityComparer<T4>.Default.GetHashCode(Item4);
-                hashCode = (hashCode*397) ^ EqualityComparer<T5>.Default.GetHashCode(Item5);
-                hashCode = (hashCode*397) ^ EqualityComparer<T6>.Default.GetHashCode(Item6);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3, Item4, Item5, Item6);
         }
 
         public override string ToString()
@@ -329,7 +294,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3, T4, T5, T6, T7>) obj);
@@ -337,17 +302,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                hashCode = (hashCode*397) ^ EqualityComparer<T4>.Default.GetHashCode(Item4);
-                hashCode = (hashCode*397) ^ EqualityComparer<T5>.Default.GetHashCode(Item5);
-                hashCode = (hashCode*397) ^ EqualityComparer<T6>.Default.GetHashCode(Item6);
-                hashCode = (hashCode*397) ^ EqualityComparer<T7>.Default.GetHashCode(Item7);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3, Item4, Item5, Item6, Item7);
         }
 
         public override string ToString()
@@ -394,7 +349,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((TarantoolTuple<T1, T2, T3, T4, T5, T6, T7, T8>) obj);
@@ -402,18 +357,7 @@ namespace ProGaudi.Tarantool.Client.Model
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = EqualityComparer<T1>.Default.GetHashCode(Item1);
-                hashCode = (hashCode*397) ^ EqualityComparer<T2>.Default.GetHashCode(Item2);
-                hashCode = (hashCode*397) ^ EqualityComparer<T3>.Default.GetHashCode(Item3);
-                hashCode = (hashCode*397) ^ EqualityComparer<T4>.Default.GetHashCode(Item4);
-                hashCode = (hashCode*397) ^ EqualityComparer<T5>.Default.GetHashCode(Item5);
-                hashCode = (hashCode*397) ^ EqualityComparer<T6>.Default.GetHashCode(Item6);
-                hashCode = (hashCode*397) ^ EqualityComparer<T7>.Default.GetHashCode(Item7);
-                hashCode = (hashCode*397) ^ EqualityComparer<T8>.Default.GetHashCode(Item8);
-                return hashCode;
-            }
+            return System.HashCode.Combine(Item1, Item2, Item3, Item4, Item5, Item6, Item7, Item8);
         }
 
         public override string ToString()

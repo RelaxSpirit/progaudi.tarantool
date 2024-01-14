@@ -18,9 +18,9 @@ namespace ProGaudi.Tarantool.Client
 
         private readonly ILogicalConnection _logicalConnection;
 
-        private Dictionary<string, ISpace> _indexByName = new Dictionary<string, ISpace>();
+        private Dictionary<string, ISpace> _indexByName = new();
 
-        private Dictionary<uint, ISpace> _indexById = new Dictionary<uint, ISpace>();
+        private Dictionary<uint, ISpace> _indexById = new();
 
         public Schema(ILogicalConnection logicalConnection)
         {

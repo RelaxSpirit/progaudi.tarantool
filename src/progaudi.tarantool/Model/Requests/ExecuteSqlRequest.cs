@@ -5,7 +5,7 @@ namespace ProGaudi.Tarantool.Client.Model.Requests
 {
     public class ExecuteSqlRequest : IRequest
     {
-        private static readonly SqlParameter[] Empty = new SqlParameter[0];
+        private static readonly SqlParameter[] Empty = System.Array.Empty<SqlParameter>();
 
         public ExecuteSqlRequest(string query, IReadOnlyList<SqlParameter> parameters)
         {

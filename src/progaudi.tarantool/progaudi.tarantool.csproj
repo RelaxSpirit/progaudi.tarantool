@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
-    <TargetFrameworks>net462;netstandard2.0;net60</TargetFrameworks>
+    <TargetFrameworks>net60;net70;net80</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
-    <TargetFrameworks>netstandard2.0;net60</TargetFrameworks>
+    <TargetFrameworks>net60;net70;net80</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <PatchLevelVersion Condition=" '$(BuildNumber)' == '' ">0</PatchLevelVersion>

@@ -8,7 +8,7 @@ namespace ProGaudi.Tarantool.Client.Utils
     {
         public static byte[] Hash(string str)
         {
-            var bytes = str == null ? new byte[0] : Encoding.UTF8.GetBytes(str);
+            var bytes = str == null ? Array.Empty<byte>() : Encoding.UTF8.GetBytes(str);
 
             return Hash(bytes);
         }

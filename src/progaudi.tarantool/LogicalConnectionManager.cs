@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using ProGaudi.Tarantool.Client.Model;
 using ProGaudi.Tarantool.Client.Model.Requests;
 using ProGaudi.Tarantool.Client.Model.Responses;
@@ -13,13 +12,13 @@ namespace ProGaudi.Tarantool.Client
     {
         private readonly ClientOptions _clientOptions;
 
-        private readonly RequestIdCounter _requestIdCounter = new RequestIdCounter();
+        private readonly RequestIdCounter _requestIdCounter = new();
 
         private LogicalConnection _droppableLogicalConnection;
 
-        private readonly ManualResetEvent _connected = new ManualResetEvent(true);
+        private readonly ManualResetEvent _connected = new(true);
 
-        private readonly AutoResetEvent _reconnectAvailable = new AutoResetEvent(true);
+        private readonly AutoResetEvent _reconnectAvailable = new(true);
 
         private Timer _timer;
 
@@ -34,6 +33,7 @@ namespace ProGaudi.Tarantool.Client
         private readonly TimeSpan? _pingTimeout;
 
         private DateTimeOffset _nextPingTime = DateTimeOffset.MinValue;
+        private bool disposedValue;
 
         public LogicalConnectionManager(ClientOptions options)
         {
@@ -48,17 +48,6 @@ namespace ProGaudi.Tarantool.Client
         }
 
         public uint PingsFailedByTimeoutCount => _droppableLogicalConnection?.PingsFailedByTimeoutCount ?? 0;
-
-        public void Dispose()
-        {
-            if (Interlocked.Exchange(ref _disposing, 1) > 0)
-            {
-                return;
-            }
-
-            Interlocked.Exchange(ref _droppableLogicalConnection, null)?.Dispose();
-            Interlocked.Exchange(ref _timer, null)?.Dispose();
-        }
 
         public async Task Connect()
         {
@@ -102,7 +91,7 @@ namespace ProGaudi.Tarantool.Client
             }
         }
 
-        private static readonly PingRequest _pingRequest = new PingRequest();
+        private static readonly PingRequest _pingRequest = new();
 
         private void CheckPing()
         {
@@ -186,6 +175,30 @@ namespace ProGaudi.Tarantool.Client
             await _droppableLogicalConnection.SendRequestWithEmptyResponse(request, timeout).ConfigureAwait(false);
 
             ScheduleNextPing();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (Interlocked.Exchange(ref _disposing, 1) > 0)
+                    {
+                        return;
+                    }
+
+                    Interlocked.Exchange(ref _droppableLogicalConnection, null)?.Dispose();
+                    Interlocked.Exchange(ref _timer, null)?.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

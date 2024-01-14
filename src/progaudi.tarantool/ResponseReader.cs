@@ -21,9 +21,9 @@ namespace ProGaudi.Tarantool.Client
         private readonly IPhysicalConnection _physicalConnection;
 
         private readonly Dictionary<RequestId, TaskCompletionSource<MemoryStream>> _pendingRequests =
-            new Dictionary<RequestId, TaskCompletionSource<MemoryStream>>();
+            new();
 
-        private readonly ReaderWriterLockSlim _pendingRequestsLock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim _pendingRequestsLock = new();
 
         private readonly ClientOptions _clientOptions;
 
@@ -247,7 +247,7 @@ namespace ProGaudi.Tarantool.Client
                 if (i%length == 0)
                     builder.AppendLine().Append("   ");
                 else
-                    builder.Append(" ");
+                    builder.Append(' ');
 
                 builder.AppendFormat("{0:X2}", result[i]);
             }

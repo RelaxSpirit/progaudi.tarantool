@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-
 using ProGaudi.MsgPack.Light;
-
 using ProGaudi.Tarantool.Client.Utils;
 
 namespace ProGaudi.Tarantool.Client.Converters
@@ -21,8 +19,8 @@ namespace ProGaudi.Tarantool.Client.Converters
         private IMsgPackConverter<long> _longConverter;
         private IMsgPackConverter<ulong> _ulongConverter;
 
-        private readonly Dictionary<Type, Action<T, IMsgPackWriter>> _writeMethodsCache = new Dictionary<Type, Action<T, IMsgPackWriter>>();
-        private readonly Dictionary<Type, Func<IMsgPackReader, T>> _readMethodsCache = new Dictionary<Type, Func<IMsgPackReader, T>>();
+        private readonly Dictionary<Type, Action<T, IMsgPackWriter>> _writeMethodsCache = new();
+        private readonly Dictionary<Type, Func<IMsgPackReader, T>> _readMethodsCache = new();
 
         public void Initialize(MsgPackContext context)
         {
@@ -35,7 +33,7 @@ namespace ProGaudi.Tarantool.Client.Converters
             _longConverter = context.GetConverter<long>();
             _ulongConverter = context.GetConverter<ulong>();
 
-            InitializeWriteMethodsChache();
+            InitializeWriteMethodsCache();
             InitializeReadMethodsCache();
         }
 
@@ -51,7 +49,7 @@ namespace ProGaudi.Tarantool.Client.Converters
             _readMethodsCache.Add(typeof(ulong), reader => (T)Enum.ToObject(typeof(T), _ulongConverter.Read(reader)));
         }
 
-        private void InitializeWriteMethodsChache()
+        private void InitializeWriteMethodsCache()
         {
             _writeMethodsCache.Add(typeof(sbyte), (value, writer) => _sbyteConverter.Write(value.ToSByte(CultureInfo.InvariantCulture), writer));
             _writeMethodsCache.Add(typeof(byte), (value, writer) => _byteConverter.Write(value.ToByte(CultureInfo.InvariantCulture), writer));
@@ -76,8 +74,7 @@ namespace ProGaudi.Tarantool.Client.Converters
         {
             var enumUnderlyingType = Enum.GetUnderlyingType(typeof(T));
 
-            Action<T, IMsgPackWriter> writeMethod;
-            if (_writeMethodsCache.TryGetValue(enumUnderlyingType, out writeMethod))
+            if (_writeMethodsCache.TryGetValue(enumUnderlyingType, out Action<T, IMsgPackWriter> writeMethod))
             {
                 writeMethod(value, writer);
             }
@@ -90,8 +87,7 @@ namespace ProGaudi.Tarantool.Client.Converters
         public T Read(IMsgPackReader reader)
         {
             var enumUnderlyingType = Enum.GetUnderlyingType(typeof(T));
-            Func<IMsgPackReader, T> readMethod;
-            if (_readMethodsCache.TryGetValue(enumUnderlyingType, out readMethod))
+            if (_readMethodsCache.TryGetValue(enumUnderlyingType, out Func<IMsgPackReader, T> readMethod))
             {
                 return readMethod(reader);
             }

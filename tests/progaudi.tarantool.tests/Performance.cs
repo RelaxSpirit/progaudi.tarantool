@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Xunit;
-
 using ProGaudi.Tarantool.Client.Model;
 
 namespace ProGaudi.Tarantool.Client.Tests
 {
     public class Performance : TestBase
     {
+#pragma warning disable xUnit1004 // Test methods should not be skipped
         [Fact(Skip = "Added just for profiling")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public async Task MultithreadTest()
         {
             var logWriter = new StringWriterLog();
             var threadsCount = 100;
             const string spaceName = "performance";
 
-            using (var tarantoolClient = new Client.Box(new ClientOptions(await ConnectionStringFactory.GetReplicationSource_1_7(), logWriter)))
+            using var tarantoolClient = new Client.Box(new ClientOptions(await ConnectionStringFactory.GetReplicationSource_1_7(), logWriter));
+            tarantoolClient.Connect().GetAwaiter().GetResult();
+
+            var schema = tarantoolClient.GetSchema();
+
+            var index = schema[spaceName]["primary"];
+            var startTime = DateTime.Now;
+
+            logWriter.WriteLine("Before start thread");
+
+            var tasks = new Task[threadsCount];
+            for (uint i = 0; i < threadsCount; i++)
             {
-                tarantoolClient.Connect().GetAwaiter().GetResult();
-
-                var schema = tarantoolClient.GetSchema();
-
-                var index = schema[spaceName]["primary"];
-                var startTime = DateTime.Now;
-
-                logWriter.WriteLine("Before start thread");
-
-                var tasks = new Task[threadsCount];
-                for (uint i = 0; i < threadsCount; i++)
-                {
-                    var client = new TestClient(index, i);
-                    tasks[i] = Task.Factory.StartNew(client.Start);
-                }
-
-                Task.WaitAll(tasks);
-
-                var endTime = DateTime.Now;
-
-                logWriter.WriteLine($"Time taken:{(endTime - startTime).TotalMilliseconds} ms");
+                var client = new TestClient(index, i);
+                tasks[i] = Task.Factory.StartNew(client.Start);
             }
+
+            Task.WaitAll(tasks);
+
+            var endTime = DateTime.Now;
+
+            logWriter.WriteLine($"Time taken:{(endTime - startTime).TotalMilliseconds} ms");
         }
     }
 

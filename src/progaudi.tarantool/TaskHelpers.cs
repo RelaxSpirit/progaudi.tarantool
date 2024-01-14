@@ -1,12 +1,12 @@
 ﻿// <copyright file="TaskHelpers.cs" company="eVote">
 //   Copyright © eVote
 // </copyright>
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace ProGaudi.Tarantool.Client
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     public static class TaskHelpers
     {
         public static async Task<T> WithCancellation<T>(

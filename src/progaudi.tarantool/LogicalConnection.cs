@@ -3,9 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using ProGaudi.MsgPack.Light;
-
 using ProGaudi.Tarantool.Client.Model;
 using ProGaudi.Tarantool.Client.Model.Headers;
 using ProGaudi.Tarantool.Client.Model.Requests;
@@ -40,7 +38,7 @@ namespace ProGaudi.Tarantool.Client
 
             _physicalConnection = new NetworkStreamPhysicalConnection();
             _responseReader = new ResponseReader(_clientOptions, _physicalConnection);
-            _requestWriter = new RequestWriter(_clientOptions, _physicalConnection);
+            _requestWriter = new RequestWriterAsync(_clientOptions, _physicalConnection);
         }
 
         public uint PingsFailedByTimeoutCount
@@ -161,8 +159,7 @@ namespace ProGaudi.Tarantool.Client
             var packetLength = new PacketSize((uint)(totalLength));
             AddPacketSize(stream, packetLength);
 
-            ArraySegment<byte> buffer;
-            if(!stream.TryGetBuffer(out buffer))
+            if (!stream.TryGetBuffer(out ArraySegment<byte> buffer))
             {
                 throw new InvalidOperationException("broken buffer");
             }

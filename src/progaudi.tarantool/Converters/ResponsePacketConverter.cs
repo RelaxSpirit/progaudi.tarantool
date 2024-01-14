@@ -37,17 +37,12 @@ namespace ProGaudi.Tarantool.Client.Converters
             for (var i = 0; i < length; i++)
             {
                 var dataKey = _keyConverter.Read(reader);
-                switch (dataKey)
+                sqlInfo = dataKey switch
                 {
-                    case Key.SqlInfo:
-                        sqlInfo = ReadSqlInfo(reader, _keyConverter, _intConverter);
-                        break;
-                    case Key.SqlInfo_2_0_4:
-                        sqlInfo = ReadSqlInfo(reader, _keyConverter, _intConverter);
-                        break;
-                    default:
-                        throw ExceptionHelper.UnexpectedKey(dataKey, Key.Data, Key.Metadata);
-                }
+                    Key.SqlInfo => ReadSqlInfo(reader, _keyConverter, _intConverter),
+                    Key.SqlInfo_2_0_4 => ReadSqlInfo(reader, _keyConverter, _intConverter),
+                    _ => throw ExceptionHelper.UnexpectedKey(dataKey, Key.Data, Key.Metadata),
+                };
             }
 
             return new DataResponse(sqlInfo);

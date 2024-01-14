@@ -47,10 +47,7 @@ namespace ProGaudi.Tarantool.Client
                 NoDelay = true
             };
 
-            if(options.ConfigureSocket != null)
-            {
-                options.ConfigureSocket(_socket);
-            }
+            options.ConfigureSocket?.Invoke(_socket);
 
             await ConnectAsync(_socket, singleNode.Uri.Host, singleNode.Uri.Port).ConfigureAwait(false);;
 
@@ -64,6 +61,12 @@ namespace ProGaudi.Tarantool.Client
             _stream.Write(buffer, offset, count);
         }
 
+        public async Task WriteAsync(byte[] buffer, int offset, int count)
+        {
+            CheckConnectionStatus();
+            await _stream.WriteAsync(buffer.AsMemory(offset, count)).ConfigureAwait(false);
+        }
+
         public async Task Flush()
         {
             CheckConnectionStatus();
@@ -73,7 +76,7 @@ namespace ProGaudi.Tarantool.Client
         public async Task<int> ReadAsync(byte[] buffer, int offset, int count)
         {
             CheckConnectionStatus();
-            return await _stream.ReadAsync(buffer, offset, count).ConfigureAwait(false);
+            return await _stream.ReadAsync(buffer.AsMemory(offset, count)).ConfigureAwait(false);
         }
 
 #if PROGAUDI_NETCORE
